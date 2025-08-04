@@ -1,0 +1,58 @@
+# ------------------------------------
+# Node.js
+# ------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ------------------------------------
+# React / Frontend build
+# ------------------------------------
+frontend/build/
+frontend/dist/
+frontend/node_modules/
+
+# ------------------------------------
+# SQLite Database
+# ------------------------------------
+*.db
+*.db-journal
+
+# ------------------------------------
+# Logs
+# ------------------------------------
+logs/
+*.log
+log.txt
+
+# Winston log files
+*.log.json
+
+# ------------------------------------
+# Environment variables
+# ------------------------------------
+.env
+.env.local
+.env.*.local
+
+# ------------------------------------
+# Docker
+# ------------------------------------
+# Ignore volumes and temp files
+docker-data/
+docker-compose.override.yml
+
+# ------------------------------------
+# OS-specific
+# ------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------
+# Editor & IDE settings
+# ------------------------------------
+.vscode/
+.idea/
+*.swp
