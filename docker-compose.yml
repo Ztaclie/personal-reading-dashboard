@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: reading-dashboard-backend
+    ports:
+      - "3002:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - LOG_LEVEL=info
+    volumes:
+      - ./backend/data:/usr/src/app/data
+      - ./backend/logs:/usr/src/app/logs
+    networks:
+      - reading-dashboard-network
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3001/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build: ./frontend
+    container_name: reading-dashboard-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - reading-dashboard-network
+    restart: unless-stopped
+
+networks:
+  reading-dashboard-network:
+    driver: bridge
+
+volumes:
+  backend_data:
+    driver: local

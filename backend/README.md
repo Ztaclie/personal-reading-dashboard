@@ -65,13 +65,15 @@ The server will start on `http://localhost:3001`
 ### Docker
 
 ```bash
-# Build and run with Docker Compose
+# Build and run with Docker Compose (recommended)
 docker-compose up backend
 
 # Or build individually
 docker build -t reading-dashboard-backend .
-docker run -p 3001:3001 reading-dashboard-backend
+docker run -p 3002:3001 reading-dashboard-backend
 ```
+
+**Note**: When running with Docker Compose, the backend is accessible on port 3002 from the host, but internally runs on port 3001.
 
 ## API Endpoints
 
@@ -252,11 +254,26 @@ backend/
 2. Test with existing data
 3. Consider migration strategy for production
 
+## Docker Configuration
+
+### Dockerfile
+
+- Multi-stage build for production optimization
+- Uses Node.js 18 Alpine for smaller image size
+- Copies only necessary files
+
+### Docker Compose
+
+- Runs on internal port 3001
+- Exposed on host port 3002
+- Volume mounts for data and logs persistence
+- Health check included
+
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Port already in use**: Change `PORT` in `.env`
+1. **Port already in use**: Change `PORT` in `.env` or use different host port in Docker
 2. **Database errors**: Check `data/` directory permissions
 3. **JWT errors**: Verify `JWT_SECRET` is set
 4. **CORS errors**: Configure `CORS_ORIGIN` in `.env`
