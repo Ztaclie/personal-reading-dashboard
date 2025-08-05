@@ -48,8 +48,14 @@ export const booksAPI = {
   getAll: () => api.get("/books"),
   getById: (id) => api.get(`/books/${id}`),
   create: (bookData) => api.post("/books", bookData),
-  updateProgress: (id, progress) => api.put(`/books/${id}/progress`, progress),
+  update: (id, bookData) => api.put(`/books/${id}`, bookData),
+  updateProgress: (id, progressData) =>
+    api.put(`/books/${id}/progress`, progressData),
   delete: (id) => api.delete(`/books/${id}`),
+  proxyIframe: (url) =>
+    api.get(`/books/proxy/iframe?url=${encodeURIComponent(url)}`),
+  extractChapter: (url) =>
+    api.get(`/books/proxy/extract?url=${encodeURIComponent(url)}`),
 };
 
 export default api;

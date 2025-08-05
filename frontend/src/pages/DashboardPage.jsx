@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { booksAPI } from "../services/api";
 import {
@@ -15,6 +16,7 @@ import {
 import AddBookModal from "../components/AddBookModal";
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -299,14 +301,22 @@ const DashboardPage = () => {
                   <p>Current: Chapter {book.current_chapter || 1}</p>
                   <p>Total: {book.total_chapters || "Unknown"} chapters</p>
                   {book.reading_url && (
-                    <a
-                      href={book.reading_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary-600 hover:text-primary-700 font-medium"
-                    >
-                      Read Online →
-                    </a>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => navigate(`/book/${book.id}`)}
+                        className="text-primary-600 hover:text-primary-700 font-medium"
+                      >
+                        Read in App →
+                      </button>
+                      <a
+                        href={book.reading_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-gray-700 text-sm"
+                      >
+                        (External)
+                      </a>
+                    </div>
                   )}
                 </div>
 

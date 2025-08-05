@@ -117,7 +117,12 @@ class Book {
         updateValues
       );
 
-      return result.changes > 0;
+      if (result.changes > 0) {
+        // Return the updated book
+        return await this.findById(bookId, userId);
+      }
+
+      return null;
     } catch (error) {
       logger.error("Error updating book progress:", error);
       throw error;
